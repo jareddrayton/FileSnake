@@ -1,0 +1,46 @@
+Limitations
+
+For TVDB only at the moment.
+Only for episodes in seasons. No specials or OVAs
+
+Check the source folder for total number of episodes and that it  equals the total number of episodes contained in a season.
+
+Scenario 1 
+
+Assume all episodes are in root directory.
+
+1	 1.1
+2	 1.2
+3	 1.3
+4	 2.1
+5	 2.2
+6	 2.3
+
+Scenario 2 
+
+1.1  1.1
+1.2  1.2 
+1.3  1.3
+2.4  2.1
+2.5  2.2 
+2.6  2.3
+
+
+
+Basic functionality.
+
+Set the source folder containing files for renaming.
+We'll have to match to the correct target show/ID from TVDB. (Can be manually to start with)
+
+Verify that We have correct number of episodes:-
+Get seasons using GET /series/{id}/episodes/summary
+
+
+
+
+Preview of name change.
+Then a commit to change. 
+
+https://natsort.readthedocs.io/en/master/index.html
+
+https://github.com/phate89/tvdbsimple
