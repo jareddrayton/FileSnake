@@ -64,26 +64,21 @@ else:
 
 new_names = []
 
+seasons = []
+
 for k, v in file_hierarchy.items():
+    os.mkdir("Test//Season{}//".format(k))
     for i in range(1, v+1):
         new_names.append(show_name + " s0" + k + "e" + str(i) + ".mkv")
+        seasons.append("Season{}//".format(k))
 
 print(len(files))
 print(len(new_names))
 
 for i in range(len(files)):
     print(files[i], new_names[i])
+    
     src = "Test//" + files[i]
-    dst = "Test//" + new_names[i]
+    dst = "Test//" + seasons[i] + new_names[i]
     
     os.rename(src, dst) 
-
-#for filename in os.listdir("xyz"): 
-    #dst ="Hostel" + str(i) + ".jpg"
-    #src ='xyz'+ filename 
-    #dst ='xyz'+ dst 
-          
-    # rename() function will 
-    # rename all the files 
-    #os.rename(src, dst) 
-    #i += 1
