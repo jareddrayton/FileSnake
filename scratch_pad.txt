@@ -3,11 +3,11 @@ Limitations
 For TVDB only at the moment.
 Only for episodes in seasons. No specials or OVAs
 
-Check the source folder for total number of episodes and that it  equals the total number of episodes contained in a season.
+Check the source folder for total number of episodes and that it equals the total number of episodes contained in a season.
 
 Scenario 1 
 
-Assume all episodes are in root directory.
+Episodes are in one directiory with incremental numbering naming.
 
 1	 1.1
 2	 1.2
@@ -17,6 +17,8 @@ Assume all episodes are in root directory.
 6	 2.3
 
 Scenario 2 
+
+Episodes are in a correct season directory structure but have a global incremental numbering rather than local to the season.
 
 1.1  1.1
 1.2  1.2 
@@ -32,7 +34,7 @@ Basic functionality.
 Set the source folder containing files for renaming.
 We'll have to match to the correct target show/ID from TVDB. (Can be manually to start with)
 
-Verify that We have correct number of episodes:-
+Verify that we have the correct number of episodes:-
 Get seasons using GET /series/{id}/episodes/summary
 
 
@@ -41,6 +43,13 @@ Get seasons using GET /series/{id}/episodes/summary
 Preview of name change.
 Then a commit to change. 
 
+Each file has to be renamed AND moved into a new directory
+
+
+
+
 https://natsort.readthedocs.io/en/master/index.html
 
 https://github.com/phate89/tvdbsimple
+
+https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/
