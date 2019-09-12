@@ -1,13 +1,11 @@
-Limitations
-
+Filebot is a tool for renaming and organising tv show/anime files to match the TVDb and plex naming conventions https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/
 For TVDB only at the moment.
-Only for episodes in seasons. No specials or OVAs
+Only for episodes in seasons. 
 
-Check the source folder for total number of episodes and that it equals the total number of episodes contained in a season.
+At the moment there is no support for specials or OVAs.
 
+----------------------------------------------------------------------------------------------
 Scenario 1 
-
-Episodes are in one directiory with incremental numbering naming.
 
 1	 1.1
 2	 1.2
@@ -16,6 +14,14 @@ Episodes are in one directiory with incremental numbering naming.
 5	 2.2
 6	 2.3
 
+Assumptions 
+
+You have the complete series contained in one folder. 
+The files are in air order with some type of incremental numbering naming.
+
+Limitations
+
+----------------------------------------------------------------------------------------------
 Scenario 2 
 
 Episodes are in a correct season directory structure but have a global incremental numbering rather than local to the season.
@@ -27,7 +33,13 @@ Episodes are in a correct season directory structure but have a global increment
 2.5  2.2 
 2.6  2.3
 
+Assumptions
 
+
+Limitations
+
+
+----------------------------------------------------------------------------------------------
 
 Basic functionality.
 
@@ -51,5 +63,3 @@ Each file has to be renamed AND moved into a new directory
 https://natsort.readthedocs.io/en/master/index.html
 
 https://github.com/phate89/tvdbsimple
-
-https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/
