@@ -1,4 +1,5 @@
 Filebot is a tool for renaming and organising tv show/anime files to match the TVDb and plex naming conventions https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/
+Information is retrieved using the TVDB's official API https://api.thetvdb.com/swagger
 For TVDB only at the moment.
 Only for episodes in seasons. 
 
@@ -40,6 +41,25 @@ Limitations
 
 
 ----------------------------------------------------------------------------------------------
+Scenario 3
+
+Episodes correctly match TVDB listing but. (Reverse of Scenario 1) 
+
+1.1  1
+1.2  2
+1.3  3
+2.1  4
+2.2  5
+2.3  6
+
+Assumptions
+
+----------------------------------------------------------------------------------------------
+Scenario 4
+
+Rename files
+
+
 
 Basic functionality.
 
@@ -57,9 +77,14 @@ Then a commit to change.
 
 Each file has to be renamed AND moved into a new directory
 
-
-
+https://realpython.com/python-pathlib/
 
 https://natsort.readthedocs.io/en/master/index.html
 
 https://github.com/phate89/tvdbsimple
+
+https://2.python-requests.org/en/master/
+
+https://realpython.com/working-with-files-in-python/#renaming-files-and-directories
+
+https://realpython.com/python-requests/

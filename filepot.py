@@ -24,7 +24,8 @@ token = r.json()['token']
 def create_file_hierarchy():
     
     file_hierarchy = {}
-    
+    episode_names = []
+
     # Find the number of seasons for show
     headers={'Content-type':'application/json', 'Authorization':'Bearer ' + token}
     b = requests.get('https://api.thetvdb.com/series/252322/episodes/summary', headers=headers)
@@ -34,10 +35,13 @@ def create_file_hierarchy():
     for i in range(1, len(seasons)):
         episodes = requests.get('https://api.thetvdb.com/series/252322/episodes/query?airedSeason='+ str(i), headers=headers)
         file_hierarchy[str(i)] = len(episodes.json()['data'])
+        
+        for i in range(len(episodes.json()['data'])):
+            episode_names.append(episodes.json()['data'][i]["episodeName"])
 
-    return file_hierarchy
+    return file_hierarchy, episode_names 
 
-file_hierarchy = create_file_hierarchy()
+file_hierarchy, episode_names = create_file_hierarchy()
 
 
 # Search the source directory for files and directories and then sort by natural order
@@ -58,21 +62,21 @@ if len(files) == total_episodes:
 else:
     print("The is a file count missmatch")
 
-
 # Make a list of all the new filenames and list of seasons
 new_names = []
 seasons = []
 for k, v in file_hierarchy.items():
     for i in range(1, v+1):
-        new_names.append(show_name + " s{:0>2}".format(k) + "e{:0>2}".format(i) + ".mkv")
+        new_names.append(show_name + " s{:0>2}".format(k) + "e{:0>2}".format(i) )
         seasons.append("Season{:0>2}//".format(k))
+        
 print()
 print("Total Source files:", len(files), "Total Target files:", len(new_names))
 
 
 # Preview the changes
 for i in range(len(files)):    
-    print("Test//" + files[i], "Test//" + seasons[i] + new_names[i])
+    print("Test//" + files[i], "Test//" + seasons[i] + new_names[i] + episode_names[i]) 
 
 
 # Confirm the file changes
@@ -90,7 +94,7 @@ if response == "y" or "Y":
     
     for i in range(len(files)):
         src = "Test//" + files[i]
-        dst = "Test//" + seasons[i] + new_names[i]    
+        dst = "Test//" + seasons[i] + new_names[i] + ".mkv"
         os.rename(src, dst)
     print()
     print("Renaming completed")
