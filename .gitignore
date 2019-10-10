@@ -50,6 +50,7 @@ Test
 
 #
 # Other
+*.mkv
 
 #
 *.config

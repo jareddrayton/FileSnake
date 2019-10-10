@@ -1,12 +1,18 @@
+import pathlib
 import os
 import requests
 import json
 from natsort import natsorted
 
+
 # detect the current working directory
 path = os.getcwd()
 print("Current working directory:", path)
 
+
+def name_search():
+    # try and find the name from the directory name
+    pass
 
 # manually provide show ID
 show_id = "252322"

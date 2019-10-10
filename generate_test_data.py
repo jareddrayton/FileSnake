@@ -1,10 +1,18 @@
-show = "Hunter X Hunter"
+from pathlib import Path
 
-episodes = 148
+show_name = "Hunter X Hunter"
 
 file_type = ".mkv"
 
+episodes = 148
+
+p = Path('Test')
+p.mkdir()
+
 for i in range(1, episodes + 1):
 
-    with open("Test\\" + show + str(i) + file_type, "w") as f:
-        f.closed
+    s = Path(show_name + str(i) + file_type)
+    
+    path =  Path.cwd() / p / s
+
+    Path(path).touch()
