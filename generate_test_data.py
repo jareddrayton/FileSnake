@@ -1,18 +1,17 @@
+import shutil
 from pathlib import Path
-
-show_name = "Hunter X Hunter"
 
 file_type = ".mkv"
 
 episodes = 148
 
-p = Path('Test')
-p.mkdir()
-
-for i in range(1, episodes + 1):
-
-    s = Path(show_name + str(i) + file_type)
+def usecase1_test(show_name):
     
-    path =  Path.cwd() / p / s
-
-    Path(path).touch()
+    shutil.rmtree(show_name)
+    p = Path(show_name)
+    p.mkdir()
+    
+    for i in range(1, episodes + 1):
+        s = Path(show_name + str(i) + file_type)
+        path =  Path.cwd() / p / s
+        Path(path).touch()

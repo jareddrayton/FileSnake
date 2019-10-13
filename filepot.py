@@ -1,23 +1,64 @@
-import pathlib
+import argparse
 import os
 import requests
 import json
+
+import generate_test_data
+
+from pathlib import Path
 from natsort import natsorted
 
 
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-src", "--source",
+                    type=str,
+                    default='Hunter X Hunter',
+                    help="File path of the source folder containing files",
+                    metavar='')
+
+parser.add_argument("-id", "--showid",
+                    type=str,
+                    default='252322',
+                    help="Provide the TVDB show ID",
+                    metavar='')
+
+
+# variables
+
+args = parser.parse_args()
+
+source = Path(args.source)
+
+show_id = args.showid
+
+append_episode_names = True
+
+# manually provide show Name
+show_name = "Hunter X Hunter"
+
+###########################################################################
+
+print(source)
+
+
+# Generate test data
+generate_test_data.usecase1_test(args.source)
+
+
+
 # detect the current working directory
-path = os.getcwd()
+path = Path.cwd()
 print("Current working directory:", path)
 
 
 def name_search():
     # try and find the name from the directory name
+    # if show id is not provided, search for 
+    
     pass
 
-# manually provide show ID
-show_id = "252322"
-# manually provide show Name
-show_name = "Hunter X Hunter"
+
 
 
 # request a token from the TVDB
@@ -26,7 +67,9 @@ r = requests.post('https://api.thetvdb.com/login', data = '{"apikey":"I7KOIY59UW
 token = r.json()['token']
 
 
-# Create a dictionary with season as key and number of episode as data.
+
+
+# Create a dictionary with season as key and number of episodes as value.
 def create_file_hierarchy():
     
     file_hierarchy = {}
@@ -43,15 +86,23 @@ def create_file_hierarchy():
         file_hierarchy[str(i)] = len(episodes.json()['data'])
         
         for i in range(len(episodes.json()['data'])):
-            episode_names.append(episodes.json()['data'][i]["episodeName"])
+            episode_names.append(episodes.json()['data'][i]["episodeName"].strip('?'))
 
     return file_hierarchy, episode_names 
 
 file_hierarchy, episode_names = create_file_hierarchy()
 
 
+
+
+def usecase1():
+    pass
+
+
+
+
 # Search the source directory for files and directories and then sort by natural order
-for root, dirs, files in os.walk("Test//."):
+for root, dirs, files in os.walk(source):
     files = natsorted(files)
 
 
@@ -68,6 +119,8 @@ if len(files) == total_episodes:
 else:
     print("The is a file count missmatch")
 
+
+
 # Make a list of all the new filenames and list of seasons
 new_names = []
 seasons = []
@@ -75,14 +128,26 @@ for k, v in file_hierarchy.items():
     for i in range(1, v+1):
         new_names.append(show_name + " s{:0>2}".format(k) + "e{:0>2}".format(i) )
         seasons.append("Season{:0>2}//".format(k))
-        
+
+
+# Append episode names to filename and file extension
+if append_episode_names == True:
+    for i in range(len(files)):    
+        new_names[i] = new_names[i] + " - " + episode_names[i] + ".mkv"  
+else:
+    for i in range(len(files)):    
+        new_names[i] = new_names[i] + ".mkv"
+
+
 print()
-print("Total Source files:", len(files), "Total Target files:", len(new_names))
+print("Total Source files:", len(files))
+print("Total Target files:", len(new_names))
+print()
 
 
 # Preview the changes
-for i in range(len(files)):    
-    print("Test//" + files[i], "Test//" + seasons[i] + new_names[i] + episode_names[i]) 
+for i in range(len(files)):
+    print(Path.cwd() / source / files[i], Path.cwd() / source / seasons[i] / new_names[i])
 
 
 # Confirm the file changes
@@ -90,21 +155,22 @@ print()
 print("Would you like to Proceed? y/n")
 response = input()
 
-
 # Proceed with renaming the files
 if response == "y" or "Y":
 
-    # create season folders
+    # create empty season folders
     for k, v in file_hierarchy.items():
-        os.mkdir("Test//Season{:0>2}//".format(k))
+        season_path = Path.cwd() / source / "Season{:0>2}".format(k)
+        os.mkdir(season_path)
     
     for i in range(len(files)):
-        src = "Test//" + files[i]
-        dst = "Test//" + seasons[i] + new_names[i] + ".mkv"
+        src = Path.cwd() / source / files[i]
+        dst = Path.cwd() / source / seasons[i] / new_names[i]
         os.rename(src, dst)
+    
     print()
-    print("Renaming completed")
+    print("Operation completed")
 
 else:
     print()
-    print("Renaming aborted")
+    print("Operation aborted")
