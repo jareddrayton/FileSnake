@@ -24,29 +24,41 @@ parser.add_argument("-id", "--showid",
                     metavar='')
 
 
-# variables
+# Variables
 
 args = parser.parse_args()
 
-print(args.source)
-
-source = args.source.strip('" \\ .')
-print(source)
-
-
-show_id = args.showid
+# Possible flag variables
 
 append_episode_names = True
 
-#manually provide show Name
-show_name = "Hunter X Hunter"
+change_source_path = True # Unused
+
+captial_sande = True # Unused
+
+###########################################################################
+
+def source_path(source):
+
+    source = args.source.strip(' " \\ . ')
+
+    source = Path(source)
+    
+    # Check that the directory exists and exit the program if it doesn't
+    if source.exists() == False:
+        print('Directory does not exist. Program terminated')
+        exit()
+
+    return source.name, source.resolve()
+
+series_name, source_directory = source_path(args.source)
+
+print(series_name, source_directory)
 
 ###########################################################################
 # Generate test data
 
-generate_test_data.usecase1_test(source)
-
-source = Path(source)
+generate_test_data.usecase1_test(series_name)
 
 ###########################################################################
 # Print the current working directory
@@ -67,9 +79,10 @@ def series_search():
     # if show id is not provided, search for 
     
     headers={'Content-type':'application/json', 'Authorization':'Bearer ' + token}
-    search_results = requests.get('https://api.thetvdb.com/search/series?name=' + requests.utils.quote(args.source), headers=headers)
-    print(search_results.json())
+    search_results = requests.get('https://api.thetvdb.com/search/series?name=' + requests.utils.quote(series_name), headers=headers)
+    #print(search_results.json())
     
+    # List the search results
     for i in range(len(search_results.json()['data'])):
         print(search_results.json()['data'][i]["seriesName"], search_results.json()['data'][i]["id"]) 
 
@@ -110,7 +123,7 @@ def usecase1():
 
 
 # Search the source directory for files and directories and then sort by natural order
-for root, dirs, files in os.walk(source):
+for root, dirs, files in os.walk(source_directory):
     files = natsorted(files)
 
 
@@ -134,7 +147,7 @@ new_names = []
 seasons = []
 for k, v in file_hierarchy.items():
     for i in range(1, v+1):
-        new_names.append(show_name + " s{:0>2}".format(k) + "e{:0>2}".format(i) )
+        new_names.append(series_name + " s{:0>2}".format(k) + "e{:0>2}".format(i) )
         seasons.append("Season{:0>2}//".format(k))
 
 
@@ -155,7 +168,7 @@ print()
 
 # Preview the changes
 for i in range(len(files)):
-    print(Path.cwd() / source / files[i], Path.cwd() / source / seasons[i] / new_names[i])
+    print(source_directory / files[i], source_directory / seasons[i] / new_names[i])
 
 
 # Confirm the file changes
@@ -168,12 +181,12 @@ if response == "y" or "Y":
 
     # create empty season folders
     for k, v in file_hierarchy.items():
-        season_path = Path.cwd() / source / "Season{:0>2}".format(k)
+        season_path = source_directory / "Season{:0>2}".format(k)
         os.mkdir(season_path)
     
     for i in range(len(files)):
-        src = Path.cwd() / source / files[i]
-        dst = Path.cwd() / source / seasons[i] / new_names[i]
+        src = source_directory / files[i]
+        dst = source_directory / seasons[i] / new_names[i]
         os.rename(src, dst)
     
     print()
