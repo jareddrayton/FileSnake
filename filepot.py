@@ -8,13 +8,14 @@ import generate_test_data
 from pathlib import Path
 from natsort import natsorted
 
+generate_test_data.usecase1_test()
 
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-src", "--source",
                     type=str,
-                    default='Hunter X Hunter',
-                    help="File path of the source folder containing files",
+                    default='Yu Yu Hakusho',
+                    help="Directory containing files to be renamed",
                     metavar='')
 
 parser.add_argument("-id", "--showid",
@@ -46,7 +47,8 @@ def source_path(source):
     
     # Check that the directory exists and exit the program if it doesn't
     if source.exists() == False:
-        print('Directory does not exist. Program terminated')
+        print('Directory does not exist.')
+        print('Program terminated.')
         exit()
 
     return source.name, source.resolve()
@@ -56,37 +58,37 @@ series_name, source_directory = source_path(args.source)
 print(series_name, source_directory)
 
 ###########################################################################
-# Generate test data
-
-generate_test_data.usecase1_test(series_name)
-
-###########################################################################
-# Print the current working directory
-print("Current working directory:", Path.cwd())
-
-
-###########################################################################
 # request a token from the TVDB
 headers={'Content-type':'application/json', 'Accept':'application/json'}
 r = requests.post('https://api.thetvdb.com/login', data = '{"apikey":"I7KOIY59UWQL3JPS"}', headers=headers)
 token = r.json()['token']
 
-
 ###########################################################################
 
 def series_search():
-    # try and find the name from the directory name
-    # if show id is not provided, search for 
+    # Search the TVDB using the given directory name
     
+    print("Searching the TVDB for " + '"' + series_name + '"')
     headers={'Content-type':'application/json', 'Authorization':'Bearer ' + token}
     search_results = requests.get('https://api.thetvdb.com/search/series?name=' + requests.utils.quote(series_name), headers=headers)
     #print(search_results.json())
     
-    # List the search results
-    for i in range(len(search_results.json()['data'])):
-        print(search_results.json()['data'][i]["seriesName"], search_results.json()['data'][i]["id"]) 
+    if search_results.status_code == 404:
+        print("No results found for " + series_name)
+        print('Program terminated.')
+        exit()
+    elif search_results.status_code == 200:
+        # List the search results
+        for i in range(len(search_results.json()['data'])):
+            print(i, search_results.json()['data'][i]["seriesName"], search_results.json()['data'][i]["id"])
 
-series_search()
+    print()
+    print("Choose a match.")    
+    choice = int(input())
+
+    return search_results.json()['data'][choice]["seriesName"], str(search_results.json()['data'][choice]["id"])
+
+series_name, show_id = series_search()
 
 ###########################################################################
 
@@ -98,22 +100,23 @@ def create_file_hierarchy():
 
     # Find the number of seasons for show
     headers={'Content-type':'application/json', 'Authorization':'Bearer ' + token}
-    b = requests.get('https://api.thetvdb.com/series/252322/episodes/summary', headers=headers)
+    b = requests.get('https://api.thetvdb.com/series/' + show_id + '/episodes/summary', headers=headers)
     seasons = b.json()['data']['airedSeasons']
 
     # Loop over the seasons starting from Season 1, missing out the specials season
     for i in range(1, len(seasons)):
-        episodes = requests.get('https://api.thetvdb.com/series/252322/episodes/query?airedSeason='+ str(i), headers=headers)
+        episodes = requests.get('https://api.thetvdb.com/series/' + show_id + '/episodes/query?airedSeason='+ str(i), headers=headers)
         file_hierarchy[str(i)] = len(episodes.json()['data'])
         
         for i in range(len(episodes.json()['data'])):
             episode_names.append(episodes.json()['data'][i]["episodeName"].strip('?*."/\\[]:;|,'))
 
+
     return file_hierarchy, episode_names 
 
 file_hierarchy, episode_names = create_file_hierarchy()
 
-
+###########################################################################
 
 
 def usecase1():
@@ -126,6 +129,7 @@ def usecase1():
 for root, dirs, files in os.walk(source_directory):
     files = natsorted(files)
 
+print(files)
 
 # Calculate the total episodes in the target show
 total_episodes = 0

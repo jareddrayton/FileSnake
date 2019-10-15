@@ -6,13 +6,14 @@ from pathlib import Path
 # mixed filetypes e.g. .avi and mkv
 
 
-
-file_type = ".mkv"
-
-episodes = 148
-
-def usecase1_test(show_name):
+def usecase1_test():
     
+    show_name = "Yu Yu Hakusho"
+
+    episodes = 148
+
+    file_type = ".mkv"
+
     p = Path(show_name)
     
     if p.exists():
@@ -24,3 +25,5 @@ def usecase1_test(show_name):
         s = Path(show_name + str(i) + file_type)
         path = Path.cwd() / p / s
         Path(path).touch()
+
+usecase1_test()
