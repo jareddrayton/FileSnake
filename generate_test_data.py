@@ -1,16 +1,7 @@
 import shutil
 from pathlib import Path
 
-
-# Tests to write
-# mixed filetypes e.g. .avi and mkv
-
-
-def usecase1_test():
-    
-    show_name = "Yu Yu Hakusho"
-
-    episodes = 148
+def usecase1_test(show_name, episodes):
 
     file_type = ".mkv"
 
@@ -25,5 +16,3 @@ def usecase1_test():
         s = Path(show_name + str(i) + file_type)
         path = Path.cwd() / p / s
         Path(path).touch()
-
-usecase1_test()
