@@ -15,9 +15,9 @@ For FilePot to work, an API key from the TVDB is currently needed in to access t
 
 ## Usecases
 
-Here are some of the most common usecases that FilePot may help you address. 
+Here are the two common usecases that FilePot has been written to help address. 
 
-#### Scenario 1 
+#### Usecase 1 
 
 All episodes of a series are present, however they are not sorted into seasons and have a global numbering system.
 
@@ -34,7 +34,7 @@ Show Name Episode 6.mkv	----> \Season 02\Show Name - S02E03.mkv
 * There are no other files in the folder.
 
 ---
-#### Scenario 2 (Not Implemented)
+#### Usecase 2 (Not Implemented)
 
 Episodes are in a correct season directory structure but have a global incremental numbering rather than local to the season.
 
@@ -48,28 +48,10 @@ Episodes are in a correct season directory structure but have a global increment
 **Assumptions** 
 
 
-
----
-#### Scenario 3 (Not Implemented)
-
-Episodes correctly match TVDB listing but. (Reverse of Scenario 1) 
-
-1.1  1
-1.2  2
-1.3  3
-2.1  4
-2.2  5
-2.3  6
-
-**Assumptions** 
-
----
-#### Scenario 4 (Not Implemented)
-
-Rename files
-
-Add show name etc, rip info.
-
 ----------------------------------------------------------------------------------------------
 
 ## Tools
+
+As well as the above two usecase some limited standard bulk rename utilities are included.
+
+Add or remove series name, media info etc.
