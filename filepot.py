@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-src", "--source",
                     type=str,
-                    default="Hunter X Hunter",
+                    default="D.Gray-man",
                     help="Directory containing files to be renamed",
                     metavar='')
 
@@ -22,7 +22,7 @@ parser.add_argument("-id", "--showid",
                     metavar='')
 
 
-generate_test_data.usecase1_test("Hunter X Hunter", 148)
+#generate_test_data.usecase1_test("D.Gray-man", 103)
 
 # Variables
 
@@ -101,9 +101,14 @@ def create_file_hierarchy():
     headers={'Content-type':'application/json', 'Authorization':'Bearer ' + token}
     b = requests.get('https://api.thetvdb.com/series/' + series_id + '/episodes/summary', headers=headers)
     seasons = b.json()['data']['airedSeasons']
+    print(seasons)
+    
+    # removes the specials season folder if present
+    if seasons.count("0") > 0:
+        seasons.remove("0")
 
     # Loop over the seasons starting from Season 1, missing out the specials season
-    for i in range(1, len(seasons)):
+    for i in range(1, len(seasons)+1):
         episodes = requests.get('https://api.thetvdb.com/series/' + series_id + '/episodes/query?airedSeason='+ str(i), headers=headers)
         file_hierarchy[str(i)] = len(episodes.json()['data'])
         

@@ -21,8 +21,12 @@ https://realpython.com/working-with-files-in-python/#renaming-files-and-director
 
 https://realpython.com/python-requests/
 
+
+
 https://www.bulkrenameutility.co.uk/Main_Intro.php
 
 https://www.advancedrenamer.com/
 
 https://www.filebot.net/
+
+https://www.tweaking4all.com/home-theatre/rename-my-tv-series-v2/
