@@ -19,7 +19,7 @@ Here are the two common usecases that FilePot has been written to help address.
 
 #### Usecase 1 
 
-All episodes of a series are present, however they are not sorted into seasons and have a global numbering system.
+All episodes of a series are present, however, they have an absolute numbering system and are not sorted into seasons.
 
 Show Name Episode 1.mkv	----> \Season 01\Show Name - S01E01.mkv  
 Show Name Episode 2.mkv	----> \Season 01\Show Name - S01E02.mkv  
@@ -36,14 +36,14 @@ Show Name Episode 6.mkv	----> \Season 02\Show Name - S02E03.mkv
 ---
 #### Usecase 2 (Not Implemented)
 
-Episodes are in a correct season directory structure but have a global incremental numbering rather than local to the season.
+All episodes of a series are present and episodes are in a correct season directory structure, however, they have an absolute numbering system.
 
-1.1  1.1
-1.2  1.2 
-1.3  1.3
-2.4  2.1
-2.5  2.2 
-2.6  2.3
+\Season 01\Show Name Episode 1.mkv	----> \Season 01\Show Name - S01E01.mkv  
+\Season 01\Show Name Episode 2.mkv	----> \Season 01\Show Name - S01E02.mkv  
+\Season 01\Show Name Episode 3.mkv	----> \Season 01\Show Name - S01E03.mkv  
+\Season 02\Show Name Episode 4.mkv	----> \Season 02\Show Name - S02E01.mkv  
+\Season 02\Show Name Episode 5.mkv	----> \Season 02\Show Name - S02E02.mkv  
+\Season 02\Show Name Episode 6.mkv	----> \Season 02\Show Name - S02E03.mkv  
 
 **Assumptions** 
 

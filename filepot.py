@@ -12,7 +12,6 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-src", "--source",
                     type=str,
-                    default="D.Gray-man",
                     help="Directory containing files to be renamed",
                     metavar='')
 
@@ -22,7 +21,7 @@ parser.add_argument("-id", "--showid",
                     metavar='')
 
 
-#generate_test_data.usecase1_test("D.Gray-man", 103)
+#generate_test_data.usecase1_test("Kateikyoushi Hitman Reborn", 203)
 
 # Variables
 
@@ -113,8 +112,7 @@ def create_file_hierarchy():
         file_hierarchy[str(i)] = len(episodes.json()['data'])
         
         for i in range(len(episodes.json()['data'])):
-            episode_names.append(episodes.json()['data'][i]["episodeName"].strip('?*."/\\[]:;|,'))
-
+            episode_names.append(episodes.json()['data'][i]["episodeName"])
 
     return file_hierarchy, episode_names 
 
@@ -170,7 +168,7 @@ for k, v in file_hierarchy.items():
 if append_episode_names == True:
     for i in range(len(files)):    
         p = Path(files[i])        
-        new_names[i] = new_names[i] + " - " + episode_names[i] + p.suffix  
+        new_names[i] = new_names[i] + " - " + episode_names[i].translate({ord(i): None for i in '?*."/\\[]:;|,'}) + p.suffix
 else:
     for i in range(len(files)):
         p = Path(files[i])    
@@ -191,7 +189,7 @@ print("Would you like to Proceed? y/n")
 response = input()
 
 # Proceed with renaming the files
-if response == "y" or "Y":
+if response == "y" or response == "Y":
 
     # create empty season folders
     for k, v in file_hierarchy.items():
