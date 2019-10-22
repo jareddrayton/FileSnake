@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-src", "--source",
                     type=str,
+                    default="Kateikyoushi Hitman Reborn",
                     help="Directory containing files to be renamed",
                     metavar='')
 
@@ -21,7 +22,7 @@ parser.add_argument("-id", "--showid",
                     metavar='')
 
 
-#generate_test_data.usecase1_test("Kateikyoushi Hitman Reborn", 203)
+generate_test_data.usecase1_test("Kateikyoushi Hitman Reborn", 203)
 
 # Variables
 
@@ -81,7 +82,7 @@ def series_search():
             print(i, search_results.json()['data'][i]["seriesName"], search_results.json()['data'][i]["id"])
 
     print()
-    print("Select an option.")    
+    print("Select an option.")
     choice = int(input())
 
     return search_results.json()['data'][choice]["seriesName"], str(search_results.json()['data'][choice]["id"])
@@ -166,12 +167,12 @@ for k, v in file_hierarchy.items():
 
 # Append episode names to filename and file extension
 if append_episode_names == True:
-    for i in range(len(files)):    
-        p = Path(files[i])        
+    for i in range(len(files)):
+        p = Path(files[i])
         new_names[i] = new_names[i] + " - " + episode_names[i].translate({ord(i): None for i in '?*."/\\[]:;|,'}) + p.suffix
 else:
     for i in range(len(files)):
-        p = Path(files[i])    
+        p = Path(files[i])
         new_names[i] = new_names[i] + p.suffix
 
 
@@ -185,7 +186,7 @@ for i in range(len(files)):
 
 # Confirm the file changes
 print()
-print("Would you like to Proceed? y/n")
+print("Would you like to proceed with these file changes? y/n")
 response = input()
 
 # Proceed with renaming the files
