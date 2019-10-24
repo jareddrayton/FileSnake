@@ -1,10 +1,10 @@
-## FilePot (CAUTION: Still in Alpha)
+## FileSnake (CAUTION: Still in Alpha)
 
-FilePot is a tool for renaming and reorganising TV Show and Anime files to match the [TVDB](https://www.thetvdb.com/) episode data, and follow [Plex](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/) naming conventions. Episode and Season information is retrieved using the TVDB's [Official API](https://api.thetvdb.com/swagger).
+FileSnake is a tool for renaming and reorganising TV Show and Anime files to match the [TVDB](https://www.thetvdb.com/) episode data, and follow [Plex](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/) naming conventions. Episode and Season information is retrieved using the TVDB's [Official API](https://api.thetvdb.com/swagger).
 
 **Important Note** 
 
-For FilePot to work, an API key from the TVDB is currently needed in to access the TVDB API.
+For FileSnake to work, an API key from the TVDB is currently needed in to access the TVDB API.
 
 **Limitations** 
 
@@ -15,7 +15,7 @@ For FilePot to work, an API key from the TVDB is currently needed in to access t
 
 ## Usecases
 
-Here are the two common usecases that FilePot has been written to help address. 
+Here are the two common usecases that FileSnake has been written to help address. 
 
 #### Usecase 1 
 

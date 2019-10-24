@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-src", "--source",
                     type=str,
-                    default="Kateikyoushi Hitman Reborn",
+                    default="Dragon Ball GT",
                     help="Directory containing files to be renamed",
                     metavar='')
 
@@ -22,7 +22,7 @@ parser.add_argument("-id", "--showid",
                     metavar='')
 
 
-generate_test_data.usecase1_test("Kateikyoushi Hitman Reborn", 203)
+generate_test_data.usecase2_test("Dragon Ball GT", 64)
 
 # Variables
 
@@ -121,14 +121,23 @@ file_hierarchy, episode_names = create_file_hierarchy()
 
 ###########################################################################
 
-def usecase1():
+def use_case1():
+    pass
+
+
+def use_case2():
     pass
 
 ###########################################################################
 
 # Search the source directory for files and directories and then sort by natural order
 for root, dirs, files in os.walk(source_directory):
+
     files = natsorted(files)
+
+print(root)
+print(dirs)
+print(files)
 
 ############################################################################
 
